@@ -13,7 +13,7 @@ class Test {
         if ((sum%2 == 0).not())
             return false
 
-        sum = sum/2
+        sum /= 2
 
         var subset1 = mutableListOf<Int>()
         var subset2 = mutableListOf<Int>()
