@@ -1,3 +1,6 @@
+import arraysandlists.LinkedList
+import arraysandlists.mergeTwoLists
+import arraysandlists.reverseList
 import graphs.AdjMatrixGraph
 import trees.BinarySearchTree
 import trees.BinaryTree
@@ -8,8 +11,13 @@ fun main(args: Array<String>) {
     // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
     println("Program arguments: ${args.joinToString()}")
 
-    graphOps()
-
+}
+fun linkedListOps(){
+    var list1 = LinkedList.createSinglyLLFromArray(intArrayOf(1,3,5,7)).start
+    var list2 = LinkedList.createSinglyLLFromArray(intArrayOf(2,4,6,8)).start
+    var merged = mergeTwoLists(list1,list2)
+    //LinkedList.printList(merged)
+    LinkedList.printList(reverseList(merged))
 }
 
 fun binaryTreeOps(){

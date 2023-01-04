@@ -1,52 +1,57 @@
 import java.util.Collections
 
 class Test {
+    /*
+Problem:
+--------
+- Given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+- Find the fewest number of coins that you need to make up that amount.
+- If that amount of money cannot be made up by any combination of the coins, return -1.
+- You may assume that you have an infinite number of each kind of coin.
+- ** Also, print all coins that made up the amount in console log.
+-----------------------------------------------------------------------------
+| Test      | Input             | Amount    | Output    | Total coins       |
+-----------------------------------------------------------------------------
+| Test 1    | [1, 2, 5]         | 11        | 3         | 5 + 5 + 1         |
+| Test 2    | [2]               | 3         | -1        | -                 |
+| Test 3    | [1]               | 0         | 0         | -                 |
+| Test 4    | [1]               | 1         | 1         | 1                 |
+| Test 5    | [1]               | 2         | 2         | 1 + 1             |
+| Test 6    | [1, 3, 4, 5]      | 7         | 2         | 4 + 3             |
+| Test 7    | [8, 2]            | 10        | 2         | 8 + 2             |
+-----------------------------------------------------------------------------
+*/
 
-    fun calcSubset(raw:Array<Int>):Boolean{
-        var result = false
-        var input = raw.toMutableList()
-        Collections.sort(input)
-        var sum = 0
-        for (i in input) {
-            sum += i
-        }
-        if ((sum%2 == 0).not())
-            return false
+    fun solution(coins: MutableList<Int>, amount: Int): Int {
+        coins.sort()
+        if(amount == 0) return 0
+        var output = mutableListOf<Int>()
+        var r = amount
 
-        sum /= 2
-
-        var subset1 = mutableListOf<Int>()
-        var subset2 = mutableListOf<Int>()
-        var sum1 = input[input.size-1]
-        var sum2=0
-        subset1.add(input[input.size-1])
-        input[input.size-1] = 0
-        var j = 0
-        for (i in 0..input.size-2){
-            if (sum1 == sum)
-                break
-            var tofind = sum-sum1
-            var index = input.indexOf(tofind)
-            if(index == -1) {
-                result = false
+        //i in (0..array.lastIndex).reversed()
+        for(j in (0 until coins.size).reversed()){
+            println(" j:$j")
+            var coin = coins[j]
+            println(" coin:$coin")
+            if(coin>r) continue
+            var q = r/coin
+            r = r%coin
+            println("q:$q r:$r")
+            for(i in 0 until q)
+                output.add(coin)
+            if(r == 0){
                 break
             }
-            subset1.add(i+1, input[index])
-            sum1 += input[index]
-            input[index] = 0
         }
-        var k =0
-        for (j in 0..input.size-1) {
-            if (input[j] != 0) {
-                subset2.add(input[j])
-                sum2 += input[j]
-                k++
-            }
+
+        if(r > 0)
+            return -1
+        else {
+            println("number of coins:"+output.size)
+            for(element in output)
+                print(""+element)
+            return output.size
         }
-        if (sum2 == sum)
-            result = true
-
-
-        return result
     }
+
 }
