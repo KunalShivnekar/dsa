@@ -2,6 +2,7 @@ import arraysandlists.LinkedList
 import arraysandlists.mergeTwoLists
 import arraysandlists.reverseList
 import graphs.AdjMatrixGraph
+import leetcode.rob
 import trees.BinarySearchTree
 import trees.BinaryTree
 
@@ -10,6 +11,7 @@ fun main(args: Array<String>) {
     // Try adding program arguments via Run/Debug configuration.
     // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
     println("Program arguments: ${args.joinToString()}")
+    rob(intArrayOf(2,7,9,3,1))
 
 }
 fun linkedListOps(){
