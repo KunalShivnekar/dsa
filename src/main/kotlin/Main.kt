@@ -2,21 +2,18 @@ import arraysandlists.LinkedList
 import arraysandlists.mergeTwoLists
 import arraysandlists.reverseList
 import graphs.AdjMatrixGraph
-import leetcode.rob
 import trees.BinarySearchTree
 import trees.BinaryTree
 
-fun main(args: Array<String>) {
+fun main(args: Array<String>):Unit {
     println("Hello World!")
     // Try adding program arguments via Run/Debug configuration.
     // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
     println("Program arguments: ${args.joinToString()}")
     //rob(intArrayOf(2,7,9,3,1))
 
-    var a = arrayOf('a','b','c','A','B','C')
-    for (c in a)
-        println("result ${c.code}")
 
+    println( suggestedMeetingTime(Pair(480,1080), listOf(Pair(540,600),Pair(840,900),Pair(870,960),Pair(1020,1050)),810,60))
 }
 fun linkedListOps(){
     var list1 = LinkedList.createSinglyLLFromArray(intArrayOf(1,3,5,7)).start

@@ -1,27 +1,41 @@
 package leetcode
 
-import java.util.LinkedList
-import java.util.Queue
+import java.util.*
 
 //5. Longest Palindromic Substring
-fun longestPalindrome(s: String): String {
-    val Q:Queue<String> = LinkedList<String>()
-    val map = HashMap<String,Int>()
-    Q.add(s)
-    var word = ""
-    while(Q.isNotEmpty()){
-        word = Q.remove()
-        val l = if (map.containsKey(word))
-                    -1
-                else
-                    checkPalindrome(word)
-        if (l==-1){
-            map.put(word,0)
-            Q.add(word.dropLast(1))
-            Q.add(word.drop(1))
-        } else break
+fun longestPalindromeBottomUp(s: String): String {
+    var c = s.toCharArray()
+    var isPalindrome =  Array(c.size){ BooleanArray(c.size) }
+    var palindromes = 0
+    var start = 0
+    var end = 0
+    var longestLength = 0
+
+    for (i in c.indices.reversed()){
+        for (j in i until c.size){
+            if (i==j){
+                isPalindrome[i][j] = true
+            } else if (c[i] == c[j]) {
+                if (j-i<=2){
+                    isPalindrome[i][j] = true
+                } else {
+                        isPalindrome[i][j] = isPalindrome[i+1][j-1]
+                }
+            }
+
+            if (isPalindrome[i][j]){
+                palindromes++
+                if((j-i+1)>longestLength){
+                    longestLength = j-i+1
+                    start = i
+                    end = j+1
+                }
+            }
+        }
     }
-return word
+    println(palindromes)
+    println("$start - $end")
+    return s.substring(start,end)
 }
 
 fun checkPalindrome(s:String):Int{
@@ -39,6 +53,37 @@ fun checkPalindrome(s:String):Int{
         l
     else
         -1
+}
+
+fun longestPalindromeTopDown(s: String): String {
+    var c = s.toCharArray()
+    val Q:Queue<Pair<Int,Int>> = LinkedList()
+    val map = HashMap<Pair<Int,Int>,Boolean>()
+    Q.add(Pair(0,c.size-1))
+    var word = Pair(0,0)
+    while(Q.isNotEmpty()){
+        word = Q.remove()
+        val l = if (map.containsKey(word))
+                    false
+                else {
+                    var i = word.first
+                    var j = word.second
+                    while (i<j){
+                        if (c[i]==c[j]){
+                            i++
+                            j--
+                        } else break
+                    }
+                    i>=j
+                }
+        if (l.not()){
+            map[word] = false
+            Q.add(Pair(word.first, word.second-1))
+            Q.add(Pair(word.first+1, word.second))
+        } else break
+    }
+
+    return s.substring(word.first,word.second+1)
 }
 
 

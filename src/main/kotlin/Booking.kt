@@ -22,7 +22,7 @@ val start = Pair(0, workingHours.first)
         }
     }
     if (index!=0){
-        for (i in index until meetingsTemp.size){
+        for (i in index until meetingsTemp.size-1){
             if((meetingsTemp[i+1].first - meetingsTemp[i].second)>duration){
                 res = "${meetingsTemp[i].second}-${meetingsTemp[i].second+duration}"
                 break
