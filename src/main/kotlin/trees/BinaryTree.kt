@@ -1,11 +1,10 @@
 package trees
 
-import java.util.Queue
-import java.util.Stack
+import java.util.*
 
-data class BinaryTreeNode(val data:Int, val left: BinaryTreeNode? = null, val right: BinaryTreeNode? = null)
+data class BinaryTreeNode(var data:Int, var left: BinaryTreeNode? = null, var right: BinaryTreeNode? = null)
 
-class BinaryTree (private val root:BinaryTreeNode) {
+class BinaryTree (val root:BinaryTreeNode) {
 
     companion object {
         fun createTree():BinaryTree {
@@ -68,6 +67,73 @@ class BinaryTree (private val root:BinaryTreeNode) {
         }
 
         return result
+    }
+
+    fun levelOrderTraversal(rootNode: BinaryTreeNode = root):List<Int> {
+        val queue: Queue<BinaryTreeNode> = LinkedList()
+        val res = mutableListOf<Int>()
+        queue.add(rootNode)
+        while (!queue.isEmpty()) {
+            val tempNode: BinaryTreeNode = queue.poll()
+            res.add(tempNode.data)
+
+            /*Enqueue left child */
+            if (tempNode.left != null) {
+                queue.add(tempNode.left)
+            }
+
+            /*Enqueue right child */
+            if (tempNode.right != null) {
+                queue.add(tempNode.right)
+            }
+        }
+        return res
+    }
+
+    fun depthOfTree(rootNode: BinaryTreeNode = root):Int {
+        val queue: Queue<BinaryTreeNode> = LinkedList()
+        var depth = 0
+        queue.add(rootNode)
+        while (!queue.isEmpty()) {
+            val size = queue.size
+            for (i in 0 until size){
+                val tempNode: BinaryTreeNode = queue.poll()
+                /*Enqueue left child */
+                if (tempNode.left != null) {
+                    queue.add(tempNode.left)
+                }
+                /*Enqueue right child */
+                if (tempNode.right != null) {
+                    queue.add(tempNode.right)
+                }
+            }
+            depth++
+        }
+        return depth
+    }
+
+    fun invertTree(rootNode: BinaryTreeNode = root):List<Int> {
+        val queue: Queue<BinaryTreeNode> = LinkedList()
+        val res = mutableListOf<Int>()
+        queue.add(rootNode)
+        while (!queue.isEmpty()) {
+            val node: BinaryTreeNode = queue.poll()
+            res.add(node.data)
+            val temp = node.left
+            node.left = node.right
+            node.right = temp
+
+            /*Enqueue left child */
+            if (node.left != null) {
+                queue.add(node.left)
+            }
+
+            /*Enqueue right child */
+            if (node.right != null) {
+                queue.add(node.right)
+            }
+        }
+        return res
     }
 
 }

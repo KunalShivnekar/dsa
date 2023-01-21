@@ -13,7 +13,7 @@ fun main(args: Array<String>):Unit {
     //rob(intArrayOf(2,7,9,3,1))
 
 
-    println( suggestedMeetingTime(Pair(480,1080), listOf(Pair(540,600),Pair(840,900),Pair(870,960),Pair(1020,1050)),810,60))
+    binaryTreeOps()
 }
 fun linkedListOps(){
     var list1 = LinkedList.createSinglyLLFromArray(intArrayOf(1,3,5,7)).start
@@ -25,10 +25,15 @@ fun linkedListOps(){
 
 fun binaryTreeOps(){
     val tree = BinaryTree.createTree()
-    val res = tree.inorderTraversal()
+    var res = tree.levelOrderTraversal()
     res.stream().forEach {
         println("Nodes: $it")
     }
+    res = tree.invertTree()
+    res.stream().forEach {
+        println("Nodes: $it")
+    }
+    println("Depth: ${tree.depthOfTree(tree.root)}")
 }
 
 fun binarySearchTreeOps(){
