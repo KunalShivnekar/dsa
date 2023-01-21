@@ -136,4 +136,12 @@ class BinaryTree (val root:BinaryTreeNode) {
         return res
     }
 
+    fun isSameTree(p: BinaryTreeNode?, q: BinaryTreeNode?): Boolean {
+        return if(p!=null && q!=null) {
+            if(p.data == q.data){
+                isSameTree(p.right,q.right) && isSameTree(p.left, q.left)
+            } else false
+        } else p==null && q==null
+    }
+
 }
