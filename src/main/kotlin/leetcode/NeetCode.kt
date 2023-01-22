@@ -1,5 +1,6 @@
 package leetcode
 
+import trees.BinaryTreeNode
 import java.util.*
 
 //5. Longest Palindromic Substring
@@ -129,4 +130,27 @@ fun rob(nums: IntArray): Int {
         b=max
     }
     return max
+}
+
+// Frequent subtree sum
+var maxFrequency = 0
+fun findFrequentTreeSum(root: BinaryTreeNode?): IntArray {
+    val map = HashMap<Int,Int>()
+    subTreeSum(root, map)
+    var res = mutableListOf<Int>()
+    for (entry in map){
+        if(entry.value==maxFrequency)
+            res.add(entry.key)
+    }
+    return res.toIntArray()
+
+}
+
+fun subTreeSum(root: BinaryTreeNode?, map:HashMap<Int,Int>): Int {
+    if(root == null) return 0
+    val sum = root.data + subTreeSum(root.left,map) + subTreeSum(root.right,map)
+    map[sum] = map.getOrDefault(sum,0) + 1
+    if (map.getValue(sum) > maxFrequency)
+        maxFrequency = map.getValue(sum)
+    return sum
 }
