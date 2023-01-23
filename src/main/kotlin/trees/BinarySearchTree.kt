@@ -1,5 +1,6 @@
 package trees
 
+
 data class BinarySearchTreeNode(val data:Int, val left: BinarySearchTreeNode? = null, val right: BinarySearchTreeNode? = null)
 
 class BinarySearchTree (private val root:BinarySearchTreeNode) {
@@ -75,8 +76,15 @@ class BinarySearchTree (private val root:BinarySearchTreeNode) {
         return root
     }
 
-    //fun insertNode(rootNode: BinarySearchTreeNode? = root, n1: Int): BinarySearchTreeNode?{
+    fun isValidBST(rootNode: BinarySearchTreeNode? = root): Boolean {
+        return valid(rootNode, null, null)
+    }
 
-    //}
+    fun valid(rootNode: BinarySearchTreeNode?, leftVal:Int?, rightVal:Int?):Boolean{
+        if(rootNode == null) return true
+        if ((leftVal!=null && rootNode.data<leftVal) || (rightVal!=null && rootNode.data>rightVal)) return false
+        return valid(rootNode.left, leftVal, rootNode.data) && valid(rootNode.right, rootNode.data, rightVal)
+    }
+
 
 }

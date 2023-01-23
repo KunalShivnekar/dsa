@@ -12,8 +12,6 @@ fun main(args: Array<String>):Unit {
     println("Program arguments: ${args.joinToString()}")
     //rob(intArrayOf(2,7,9,3,1))
 
-
-    binaryTreeOps()
 }
 fun linkedListOps(){
     var list1 = LinkedList.createSinglyLLFromArray(intArrayOf(1,3,5,7)).start
@@ -40,6 +38,7 @@ fun binarySearchTreeOps(){
     val tree = BinarySearchTree.createTree()
     println("Max Node = ${tree.findMaximumNode()}")
     println("Min Node = ${tree.findMinimumNode()}")
+    println(tree.isValidBST())
 }
 
 fun searchOps(){
