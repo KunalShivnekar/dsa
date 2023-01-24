@@ -144,4 +144,42 @@ class BinaryTree (val root:BinaryTreeNode) {
         } else p==null && q==null
     }
 
+/***********************  Serialize and deserialize a Tree ***********************/
+    private var i: Int = 0
+fun serialize(root: BinaryTreeNode?): String? {
+        val list: MutableList<String> = ArrayList()
+        serializeDFS(root, list)
+        return java.lang.String.join(",", list)
+    }
+
+    private fun serializeDFS(root: BinaryTreeNode?, list: MutableList<String>) {
+        if (root == null) {
+            list.add("N")
+            return
+        }
+        list.add(java.lang.String.valueOf(root.data))
+        serializeDFS(root.left, list)
+        serializeDFS(root.right, list)
+    }
+
+    // Decodes your encoded data to tree.
+    fun deserialize(data: String): BinaryTreeNode? {
+        val tokens = data.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        return deserializeDFS(tokens)
+    }
+
+    private fun deserializeDFS(tokens: Array<String>): BinaryTreeNode? {
+        val token = tokens[i]
+        if (token == "N") {
+            this.i++
+            return null
+        }
+        val node = BinaryTreeNode(token.toInt())
+        this.i++
+        node.left = deserializeDFS(tokens)
+        node.right = deserializeDFS(tokens)
+        return node
+    }
+    /**********************************************/
+
 }
