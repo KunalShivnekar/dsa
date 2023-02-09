@@ -2,6 +2,7 @@ import arraysandlists.LinkedList
 import arraysandlists.mergeTwoLists
 import arraysandlists.reverseList
 import graphs.AdjMatrixGraph
+import leetcode.ConnectedComponents
 import trees.BinarySearchTree
 import trees.BinaryTree
 
@@ -10,7 +11,13 @@ fun main(args: Array<String>):Unit {
     // Try adding program arguments via Run/Debug configuration.
     // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
     println("Program arguments: ${args.joinToString()}")
-    //rob(intArrayOf(2,7,9,3,1))
+
+    val inp = listOf(1,2,3,3,5,6,5,"Kunal", "Shivnekar",10,30,3.4,5.0)
+    inp.filterIsInstance<Int>()
+
+    //a = [20,4,5,8,10,40,50,90]
+    //b = [1,20,10,2,5,8,0,25,90]
+
 
 }
 fun linkedListOps(){
@@ -57,4 +64,7 @@ fun graphOps(){
 
     val graph2 = AdjMatrixGraph.createDirectedWeightedGraph()
     graph2.shortestPathWeightedDijkstra(0)
+
+    val r = ConnectedComponents().countComponents(5, arrayOf(intArrayOf(0,1), intArrayOf(1,2), intArrayOf(3,4)))
+    println("ConnectedComponents: $r")
 }
