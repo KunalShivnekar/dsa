@@ -3,6 +3,21 @@ package leetcode
 import trees.BinaryTreeNode
 import java.util.*
 
+// 49. Group Anagrams
+fun groupAnagrams(strs: Array<String>): List<List<String>> {
+    val group = HashMap<String,MutableList<String>>()
+
+    for (s in strs){
+        val count = IntArray(26)
+        for (c in s){
+            count[c-'a'] += 1
+        }
+        val key = count.joinToString()
+        group[key] = group.getOrDefault(key, mutableListOf()).also { it.add(s) }
+    }
+    return group.values.toList()
+}
+
 // 323. number-of-connected-components-in-an-undirected-graph
 class ConnectedComponents(){
     private val parent = ArrayList<Int>()
