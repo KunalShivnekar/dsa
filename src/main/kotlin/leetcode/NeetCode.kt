@@ -3,6 +3,43 @@ package leetcode
 import trees.BinaryTreeNode
 import java.util.*
 
+//347. Top K Frequent Elements
+fun topKFrequent(nums: IntArray, k: Int): IntArray {
+    val count = hashMapOf<Int, Int>()
+    val freq = Array(nums.size+1){ mutableListOf<Int>() }
+    val res = mutableListOf<Int>()
+
+    for (num in nums) {
+        count[num] = count.getOrDefault(num, 0) + 1
+    }
+    for ((n, c) in count) {
+        freq[c].add(n)
+    }
+    for (i in freq.size - 1 downTo 0) {
+        for (n in freq[i]) {
+            res.add(n)
+            if (res.size == k) {
+                return res.toIntArray()
+            }
+        }
+    }
+    return intArrayOf()
+}
+
+// 242. Valid Anagram
+fun isAnagram(s: String, t: String): Boolean {
+
+    fun countHash(string: String):String{
+        val count = IntArray(26)
+        for (c in string){
+            count[c-'a'] += 1
+        }
+        return count.joinToString()
+    }
+
+    return countHash(s) == countHash(t)
+}
+
 // 49. Group Anagrams
 fun groupAnagrams(strs: Array<String>): List<List<String>> {
     val group = HashMap<String,MutableList<String>>()
