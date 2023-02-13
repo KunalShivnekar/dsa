@@ -27,28 +27,44 @@ fun groupnum(arr:IntArray, k:Int):Int{
 
 
 
-fun triplet(arr:IntArray){
-    arr.sort()
-    //if ((arr[0]>=0).or(arr[arr.size-1]<=0)
-        //return -1
-    var i =0
-    var j =arr.size-1
-    var res = Array(0) { IntArray(0) }
-    var index = 0
-    while (arr[i]<arr[j]){
-        var sum = arr[i]+arr[j]
-        var mid = 0
-        if(sum>0){
-            sum = sum+arr[i+1]
-            mid = i+1
-        } else if(sum<0){
-            sum = sum + arr[j-1]
-            mid = j-1
-        }
-        if(sum==0){
-            res[index] = intArrayOf(arr[i], arr[mid], arr[j])
-        }
-        i++
-        j--
+fun threeSum(nums: IntArray): List<List<Int>> {
+    if(nums.size<3){
+        return List(0){List<Int>(0){0}}
     }
+    if(nums.size==3){
+        return if(nums.sum()==0) listOf(nums.toList()) else List(0){List<Int>(0){0}}
+    }
+    nums.sort()
+    val a = MutableList(0){List(3){0}}
+    val s = nums.size
+    var j = 0
+    var k = 0
+
+    for(i in 0 until s-2){
+        if(i!=0 && nums[i]==nums[i-1]){
+            continue
+        }
+        j = i+1
+        k = s-1
+        while(j<k){
+            if(nums[i]+nums[j]+nums[k]>0){
+                k -= 1
+            }
+            else if(nums[i]+nums[j]+nums[k]<0){
+                j += 1
+            }
+            else{
+                a.add(listOf(nums[i], nums[j], nums[k]))
+                j += 1
+                k -= 1
+                while(j<k && nums[j]==nums[j-1]){
+                    j+=1
+                }
+                while(k<j && nums[k]==nums[k+1]){
+                    k-=1
+                }
+            }
+        }
+    }
+    return a
 }
