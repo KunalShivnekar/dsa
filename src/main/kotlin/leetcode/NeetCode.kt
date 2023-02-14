@@ -4,6 +4,24 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//11. Container With Most Water
+fun maxArea(height: IntArray): Int {
+    var res = 0
+    var l = 0
+    var r = height.size-1
+    while (l<r){
+        var area = (r-l) * minOf(height[l], height[r])
+        res = maxOf(res, area)
+        if(height[l] < height[r]){
+            l++
+        } else {
+            r++
+        }
+    }
+    return res
+}
+
+
 // 15. 3Sum
 fun threeSum(nums: IntArray): List<List<Int>> {
     if(nums.size<3){
@@ -203,8 +221,9 @@ fun longestPalindromeBottomUp(s: String): String {
 }
 
 fun checkPalindrome(s:String):Int{
-    val l = s.length
-    var c = s.toCharArray()
+
+    var c = s.toCharArray().filter { it.isLetterOrDigit() }.map { Character.toLowerCase(it) }
+    val l = c.size
     var i = 0
     var j = l-1
     while (i<j){
