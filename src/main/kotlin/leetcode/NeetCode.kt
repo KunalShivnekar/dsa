@@ -4,6 +4,31 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//39. Combination Sum
+class Solution {
+    fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
+        val res = mutableListOf<List<Int>>()
+        dfs(candidates, target, 0, mutableListOf<Int>(), res)
+        return res
+    }
+
+    private fun dfs(candidates: IntArray, target: Int, index:Int, list: MutableList<Int>, result: MutableList<List<Int>>) {
+        if(target == 0){
+            result.add(ArrayList(list))
+            return
+        }
+
+        if(target < 0 || index >= candidates.size)
+            return
+
+        for(i in index until candidates.size){
+            list.add(candidates[i])
+            dfs(candidates, target-candidates[i], i, list, result)
+            list.removeAt(list.size-1)
+        }
+    }
+}
+
 // 33. Search in Rotated Sorted Array
 fun search(nums: IntArray, target: Int): Int {
     var i = 0
