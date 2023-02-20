@@ -4,6 +4,49 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//332. Reconstruct Itinerary
+
+
+fun findItinerary(tickets: List<List<String>>): List<String> {
+
+    var map = HashMap<String, MutableList<String>>()
+    var res = mutableListOf<String>()
+
+    for(ticket in tickets){
+        map.getOrPut(ticket[0]){mutableListOf<String>()}.apply{
+            add(ticket[1])
+            sort()
+        }
+    }
+
+    fun dfs (destination:String, target:Int):Boolean {
+        res.add(destination)
+        if(res.size == target) return true
+
+        var destList = map.get(destination)
+        if(destList==null || destList.size==0) return false
+
+        val temp = ArrayList(destList)
+        for(t in temp){
+            destList.remove(t)
+            if(dfs(t,target))
+                return true
+            else {
+                res.removeAt(res.lastIndex)
+                destList.add(t)
+            }
+        }
+
+        return false
+    }
+
+
+    dfs("JFK", tickets.size+1)
+    return res
+}
+
+
+
 //39. Combination Sum
 class Solution {
     fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
