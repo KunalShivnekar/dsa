@@ -4,8 +4,57 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
-//332. Reconstruct Itinerary
+//56. Merge Intervals
+fun merge(intervals: Array<IntArray>): Array<IntArray> {
+    intervals.sortWith(kotlin.Comparator { o1, o2 -> return@Comparator o1[0]-o2[0] })
+    val res = ArrayList<IntArray>()
+    var temp = intervals[0]
+    for(i in 1..intervals.size-1){
 
+        if(temp[1] < intervals[i][0]){
+            res.add(temp)
+            temp = intervals[i]
+        } else if(temp[1] >= intervals[i][1]){
+            continue
+        } else {
+            temp[1] = Math.max(intervals[i][1],temp[1])
+        }
+    }
+    res.add(temp)
+    return res.toTypedArray()
+}
+
+//57. Insert Interval
+fun insert(intervals: Array<IntArray>, newInterval: IntArray): Array<IntArray> {
+    var res = ArrayList<IntArray>()
+    var i=0
+    for(oldInterval in intervals){
+
+        if(newInterval[1] < oldInterval[0]){
+            res.add(newInterval)
+            break
+        }
+        else if(oldInterval[1]<newInterval[0]){
+            res.add(oldInterval)
+        } else {
+            newInterval[0] = Math.min(oldInterval[0],newInterval[0])
+            newInterval[1] = Math.max(oldInterval[1],newInterval[1])
+        }
+        i++
+    }
+    if(i == intervals.size)
+        res.add(newInterval)
+    else {
+        for(j in i..intervals.size-1){
+            res.add(intervals[j])
+        }
+    }
+
+    return res.toTypedArray()
+}
+
+
+//332. Reconstruct Itinerary
 
 fun findItinerary(tickets: List<List<String>>): List<String> {
 
