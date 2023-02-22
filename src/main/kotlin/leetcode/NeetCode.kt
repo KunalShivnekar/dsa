@@ -4,6 +4,23 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//435. Non-overlapping Intervals
+fun eraseOverlapIntervals(intervals: Array<IntArray>): Int {
+    intervals.sortBy { it[0] }
+    var prevEnd = intervals[0][1]
+    var res = 0
+    for(i in 1..intervals.size-1){
+        if(intervals[i][0]>=prevEnd){
+            prevEnd = intervals[i][1]
+        } else {
+            res++
+            prevEnd = Math.min(prevEnd, intervals[i][1])
+        }
+    }
+
+    return res
+}
+
 //56. Merge Intervals
 fun merge(intervals: Array<IntArray>): Array<IntArray> {
     intervals.sortWith(kotlin.Comparator { o1, o2 -> return@Comparator o1[0]-o2[0] })
