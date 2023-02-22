@@ -4,6 +4,34 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//437. Path Sum III
+
+fun pathSum(root: BinaryTreeNode?, targetSum: Int): Int {
+    var count = 0
+    var map = HashMap<Long,Int>()
+
+    fun preorder(node:BinaryTreeNode?, sum:Long){
+        if(node==null)
+            return
+        var currSum = sum + node.data
+
+        if(currSum == targetSum.toLong())
+            count += 1
+
+        count += map.getOrPut(currSum-targetSum){0}
+
+        map.put(currSum, map.getOrPut(currSum){0} + 1)
+
+        preorder(node.left, currSum)
+        preorder(node.right, currSum)
+
+        map.put(currSum, map.getOrPut(currSum){0} - 1)
+    }
+
+    preorder(root,0L)
+    return count
+}
+
 //435. Non-overlapping Intervals
 fun eraseOverlapIntervals(intervals: Array<IntArray>): Int {
     intervals.sortBy { it[0] }
