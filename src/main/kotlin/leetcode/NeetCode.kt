@@ -5,6 +5,36 @@ import java.util.*
 import kotlin.math.max
 
 
+// 79. Word Search
+fun exist(board: Array<CharArray>, word: String): Boolean {
+    var rows = board.size
+    var cols = board[0].size
+
+    for(r in 0 until rows){
+        for(c in 0 until cols){
+            if(board[r][c] == word[0]){
+                var res = search(r,c,board,word,0)
+                if(res) return res
+            }
+        }
+    }
+    return false
+}
+
+fun search(r:Int,c:Int,board: Array<CharArray>, word: String, index:Int):Boolean{
+    if(index>= word.length) return true
+    if(r<0 || r>=board.size || c<0 || c>=board[0].size) return false
+
+
+    if(board[r][c] == word[index]){
+        board[r][c] = '*'
+        var res = search(r+1,c,board,word,index+1) || search(r-1,c,board,word,index+1) || search(r,c-1,board,word,index+1) || search(r,c+1,board,word,index+1)
+        if(res) return res
+        board[r][c] = word[index]
+    }
+    return false
+}
+
 // 91. Decode Ways
 fun numDecodings(s: String): Int {
     if(s.length == 0) return 0
