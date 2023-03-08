@@ -4,6 +4,33 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+
+// 91. Decode Ways
+fun numDecodings(s: String): Int {
+    if(s.length == 0) return 0
+    var cache = IntArray(s.length){-1}
+    return isValid(s.toCharArray(),0,cache)
+}
+
+fun isValid(s:CharArray, index:Int, cache:IntArray):Int{
+    if(index>= s.size) return 1
+    if(cache[index]!=-1) return cache[index]
+    var num = s[index].toString().toInt()
+    var res = 0
+    if(num == 0)
+        return 0
+    else
+        res = isValid(s,index+1,cache)
+
+    if(index<s.size-1){
+        num = "${s[index]}${s[index+1]}".toInt()
+        if(num <= 26)
+            res += isValid(s,index+2,cache)
+    }
+    cache[index] = res
+    return cache[index]
+}
+
 //437. Path Sum III
 
 fun pathSum(root: BinaryTreeNode?, targetSum: Int): Int {
