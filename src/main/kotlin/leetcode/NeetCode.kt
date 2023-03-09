@@ -5,6 +5,97 @@ import java.util.*
 import kotlin.math.max
 
 
+//212. Word Search II
+class WordSearchII {
+    var trie = Trie()
+    var res = mutableSetOf<String>()
+    var visited = mutableSetOf<String>()
+
+    fun findWords(board: Array<CharArray>, words: Array<String>): List<String> {
+        words.forEach{
+            trie.insert(it)
+        }
+        var rows = board.size
+        var cols = board[0].size
+
+        for(r in 0 until rows){
+            for(c in 0 until cols){
+                search(r,c,board,trie.root,"")
+            }
+        }
+        return res.toList()
+    }
+
+    fun search(r:Int,c:Int,board: Array<CharArray>, node:TrieNode, word:String){
+        if(r<0 || r>=board.size || c<0 || c>=board[0].size) return
+        if(visited.contains("$r,$c")) return
+
+        val n = trie.startsWith(board[r][c].toString(),node) ?: return
+        visited.add("$r,$c")
+
+        var w = word + board[r][c].toString()
+        if(n.isEnd()) res.add(w)
+
+        search(r+1,c,board,n,w)
+        search(r-1,c,board,n,w)
+        search(r,c+1,board,n,w)
+        search(r,c-1,board,n,w)
+
+        visited.remove("$r,$c")
+    }
+}
+
+class Trie() {
+
+    val root: TrieNode = TrieNode()
+
+    fun insert(word: String) {
+        var node = root
+        word.forEach {
+            if (node.contains(it).not()) {
+                node.put(it, TrieNode())
+            }
+            node = node.get(it)
+        }
+        node.setIsEnd()
+    }
+
+    fun startsWith(prefix: String, tn:TrieNode = root): TrieNode? {
+        var node = tn
+        prefix.forEach {
+            if (node.contains(it).not()) {
+                return null
+            }
+            node = node.get(it)
+        }
+        return node
+    }
+
+}
+
+class TrieNode {
+    private var isEnd = false
+    private val links = Array<TrieNode?>(26) { null }
+
+    fun put(character: Char, node: TrieNode) {
+        links[character - 'a'] = node
+    }
+
+    fun contains(letter: Char): Boolean {
+        return links[letter - 'a'] != null
+    }
+
+    fun isEnd(): Boolean = isEnd
+
+    fun setIsEnd() {
+        isEnd = true
+    }
+
+    fun get(character: Char): TrieNode {
+        return links[character - 'a']!!
+    }
+}
+
 // 79. Word Search
 fun exist(board: Array<CharArray>, word: String): Boolean {
     var rows = board.size
