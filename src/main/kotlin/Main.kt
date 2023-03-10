@@ -3,7 +3,7 @@ import arraysandlists.mergeTwoLists
 import arraysandlists.reverseList
 import graphs.AdjMatrixGraph
 import leetcode.ConnectedComponents
-import leetcode.WordSearchII
+import leetcode.minInterval
 import trees.BinarySearchTree
 import trees.BinaryTree
 
@@ -18,7 +18,8 @@ fun main(args: Array<String>):Unit {
 
     //a = [20,4,5,8,10,40,50,90]
     //b = [1,20,10,2,5,8,0,25,90]
-    var res = WordSearchII().findWords( board = arrayOf(charArrayOf('o','a','a','n'), charArrayOf('e','t','a','e'), charArrayOf('i','h','k','r'), charArrayOf('i','f','l','v')),words = arrayOf("oath","pea","eat","rain"))
+    //var res = WordSearchII().findWords( board = arrayOf(charArrayOf('o','a','a','n'), charArrayOf('e','t','a','e'), charArrayOf('i','h','k','r'), charArrayOf('i','f','l','v')),words = arrayOf("oath","pea","eat","rain"))
+    minInterval(arrayOf(intArrayOf(1,4), intArrayOf(2,4), intArrayOf(3,6), intArrayOf(4,4)), intArrayOf(2,3,4,5))
 
 }
 fun linkedListOps(){

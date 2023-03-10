@@ -4,6 +4,44 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//253. Meeting Rooms II
+fun minMeetingRooms(intervals: Array<IntArray>): Int {
+    intervals.sortBy {it[0]}
+    var max = 1
+    var stack = PriorityQueue<IntArray>(Comparator { o1, o2 -> return@Comparator o1[1]-o2[1] })
+    stack.add(intervals[0])
+
+    for(i in 1 until intervals.size){
+        while(stack.peek()[1] <= intervals[i][0]) {
+            stack.remove()
+            if(stack.isEmpty()) break
+        }
+        stack.add(intervals[i])
+        max = Math.max(max,stack.size)
+    }
+    return max
+}
+
+//1851. Minimum Interval to Include Each Query
+fun minInterval(intervals: Array<IntArray>, queries: IntArray): IntArray {
+    intervals.sortWith(Comparator { o1, o2 -> return@Comparator (o1[1]-o1[0]) - (o2[1]-o2[0]) })
+
+
+    var res = mutableListOf<Int>()
+    for(query in queries){
+        var flag = false
+        for(interval in intervals){
+            if(interval[0]<= query && query <= interval[1]){
+                res.add(interval[1]-interval[0]+1)
+                flag = true
+                break
+            }
+        }
+        if(flag.not())res.add(-1)
+    }
+    return res.toIntArray()
+}
+
 
 //212. Word Search II
 class WordSearchII {
@@ -199,7 +237,7 @@ fun eraseOverlapIntervals(intervals: Array<IntArray>): Int {
 
 //56. Merge Intervals
 fun merge(intervals: Array<IntArray>): Array<IntArray> {
-    intervals.sortWith(kotlin.Comparator { o1, o2 -> return@Comparator o1[0]-o2[0] })
+    intervals.sortWith(Comparator { o1, o2 -> return@Comparator o1[0]-o2[0] })
     val res = ArrayList<IntArray>()
     var temp = intervals[0]
     for(i in 1..intervals.size-1){
