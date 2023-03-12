@@ -3,7 +3,6 @@ import arraysandlists.mergeTwoLists
 import arraysandlists.reverseList
 import graphs.AdjMatrixGraph
 import leetcode.ConnectedComponents
-import leetcode.minInterval
 import trees.BinarySearchTree
 import trees.BinaryTree
 
@@ -19,7 +18,8 @@ fun main(args: Array<String>):Unit {
     //a = [20,4,5,8,10,40,50,90]
     //b = [1,20,10,2,5,8,0,25,90]
     //var res = WordSearchII().findWords( board = arrayOf(charArrayOf('o','a','a','n'), charArrayOf('e','t','a','e'), charArrayOf('i','h','k','r'), charArrayOf('i','f','l','v')),words = arrayOf("oath","pea","eat","rain"))
-    minInterval(arrayOf(intArrayOf(1,4), intArrayOf(2,4), intArrayOf(3,6), intArrayOf(4,4)), intArrayOf(2,3,4,5))
+    //minInterval(arrayOf(intArrayOf(1,4), intArrayOf(2,4), intArrayOf(3,6), intArrayOf(4,4)), intArrayOf(2,3,4,5))
+    marchEasy()
 
 }
 fun linkedListOps(){
@@ -69,4 +69,58 @@ fun graphOps(){
 
     val r = ConnectedComponents().countComponents(5, arrayOf(intArrayOf(0,1), intArrayOf(1,2), intArrayOf(3,4)))
     println("ConnectedComponents: $r")
+}
+
+fun marchEasy() {
+    val mn = readLine()!!.split(" ")
+    val n = mn[0].toInt()
+    val m = mn[1].toInt()
+    val grid = mutableListOf<List<Int>>()
+
+    for(t in 0 until n){
+        var row = readLine()!!.split(" ").map{it.toInt()}
+        grid.add(row)
+    }
+    val rowSum = IntArray(n)
+    val colSum = IntArray(m)
+
+    for(r in 0 until n){
+        var sum = 0
+        for(c in 0 until m){
+            sum += grid[r][c]
+        }
+        rowSum[r] = sum
+    }
+
+    for(c in 0 until m){
+        var sum = 0
+        for(r in 0 until n){
+            sum += grid[r][c]
+        }
+        colSum[c] = sum
+    }
+    var maxSum = 0
+    var x = 0
+    var y = 0
+
+    for(r in 0 until n){
+        for(c in 0 until m){
+            var sum = rowSum[r]+colSum[c] - (grid[r][c]*2)
+            if(sum>maxSum){
+                maxSum = sum
+                x = r
+                y = c
+            } else if(sum == maxSum){
+                if(r<x){
+                    x = r
+                    y = c
+                } else if(r==x && c<y){
+                    x = r
+                    y = c
+                }
+            }
+        }
+    }
+    println("${x+1} ${y+1}")
+    return
 }

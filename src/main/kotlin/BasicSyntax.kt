@@ -36,6 +36,9 @@ var size2 = listofArray.size
 //intarray2d.sortWith(Comparator { o1, o2 -> return@Comparator (o1[1]-o1[0]) - (o2[1]-o2[0]) })
 // intarray2d.sortBy {it[0]}
 
+val inp2 = readLine()!!.split(" ")
+var nums = inp2.map{it.toInt()}.sorted().toMutableList()
+
 /********* Stack *********/
 var stack = Stack<String>()
 var sSize = stack.size
