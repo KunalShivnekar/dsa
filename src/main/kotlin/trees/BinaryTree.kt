@@ -90,6 +90,37 @@ class BinaryTree (val root:BinaryTreeNode) {
         return res
     }
 
+    fun zigzagLevelOrder(rootNode: BinaryTreeNode? = root): List<List<Int>> {
+        val queue: Deque<BinaryTreeNode> = LinkedList()
+        var res = mutableListOf<List<Int>>()
+        if(rootNode==null) return res
+        var depth = 0
+        queue.add(rootNode)
+        while (!queue.isEmpty()) {
+            var level = mutableListOf<Int>()
+            for (i in 0 until queue.size){
+                if(depth%2==0) {
+                    val tempNode: BinaryTreeNode = queue.pollFirst()
+                    level.add(tempNode.data)
+                    /*Enqueue left child */
+                    tempNode.left?.let { queue.addLast(it) }
+                    /*Enqueue right child */
+                    tempNode.right?.let { queue.addLast(it) }
+                } else {
+                    val tempNode: BinaryTreeNode = queue.pollLast()
+                    level.add(tempNode.data)
+                    /*Enqueue right child */
+                    tempNode.right?.let { queue.addFirst(it) }
+                    /*Enqueue left child */
+                    tempNode.left?.let { queue.addFirst(it) }
+                }
+            }
+            res.add(level)
+            depth++
+        }
+        return res
+    }
+
     fun depthOfTree(rootNode: BinaryTreeNode = root):Int {
         val queue: Queue<BinaryTreeNode> = LinkedList()
         var depth = 0
