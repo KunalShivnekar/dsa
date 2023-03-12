@@ -4,6 +4,26 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//424. Longest Repeating Character Replacement
+fun characterReplacement(s: String, k: Int): Int {
+    var count = IntArray(26)
+    var res = 0
+    var maxF = 0
+    var l = 0
+
+    for(r in 0 until s.length){
+        count[s[r]-'A'] += 1
+        maxF = Math.max(maxF, count[s[r]-'A'])
+        println("window:${r-l+1} maxF:$maxF")
+        while((r-l+1)-maxF > k){
+            count[s[l]-'A'] -= 1
+            l++
+        }
+        res = Math.max(res, (r-l+1))
+    }
+    return res
+}
+
 //253. Meeting Rooms II
 fun minMeetingRooms(intervals: Array<IntArray>): Int {
     intervals.sortBy {it[0]}
