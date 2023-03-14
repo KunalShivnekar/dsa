@@ -4,6 +4,35 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//45. Jump Game II
+fun jump(nums: IntArray): Int {
+    if(nums.size==1) return 0
+
+
+    var index = 0
+    var newindex = 0
+    var jumps = 0
+    while(index<nums.size-1){
+        var maxJump = 0
+        println("index $index")
+        for(i in index+1..index+nums[index]){
+
+            if(i>=nums.size-1) {
+                newindex = i
+                break
+            }
+            var jump = i +nums[i]
+            if(jump>maxJump){
+                maxJump = jump
+                newindex = i
+            }
+        }
+        jumps++
+        index = newindex
+    }
+    return jumps
+}
+
 //424. Longest Repeating Character Replacement
 fun characterReplacement(s: String, k: Int): Int {
     var count = IntArray(26)
@@ -725,6 +754,31 @@ fun rob(nums: IntArray): Int {
         b=max
     }
     return max
+}
+//213. House Robber II
+fun robII(nums: IntArray): Int {
+    var first = nums[0]
+    if(nums.size == 1) return first
+    var second = maxOf(nums[0], nums[1])
+    if(nums.size == 2) return second
+    if(nums.size == 3) return Math.max(second,nums[2])
+    var res1 = 0
+    for(i in 2..nums.size - 2) {
+        res1 = maxOf(nums[i] + first, second)
+        first = second
+        second = res1
+    }
+
+    first = nums[1]
+    second = maxOf(nums[1], nums[2])
+    var res2 = 0
+    for(i in 3..nums.size - 1) {
+        res2 = maxOf(nums[i] + first, second)
+        first = second
+        second = res2
+    }
+
+    return Math.max(res1,res2)
 }
 
 // Frequent subtree sum
