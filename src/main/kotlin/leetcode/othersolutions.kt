@@ -1,5 +1,52 @@
 package leetcode
 
+// 714. Best Time to Buy and Sell Stock with Transaction Fee
+fun maxProfitWithFee(prices: IntArray, fee: Int): Int {
+    var transactions = mutableListOf<Pair<Int,Int>>()
+    var start = 0
+    var end = 0
+    for(i in 1 until prices.size){
+        if(prices[i]>prices[i-1]){
+            end = i
+        } else {
+            if(end>start){
+                transactions.add(Pair(prices[start],prices[end]))
+            }
+            start = i
+        }
+    }
+
+    if(end>start){
+        transactions.add(Pair(prices[start],prices[end]))
+    }
+
+    var i = 1
+    while(i < transactions.size){
+        var mergeLoss = transactions[i-1].second - transactions[i-1].first + transactions[i].second - transactions[i].first - fee
+        if(mergeLoss < transactions[i].second - transactions[i-1].first) {
+            var newT = Pair(Math.min(transactions[i-1].first, transactions[i].first),Math.max(transactions[i-1].second, transactions[i].second))
+            transactions.removeAt(i-1)
+            transactions.removeAt(i-1)
+            transactions.add(i-1,newT)
+        } else {
+            i++
+        }
+    }
+
+    var profit = 0
+
+    transactions.forEach {
+
+        if((it.second-it.first-fee)>0){
+            println("${it.first}, ${it.second}")
+            profit += it.second-it.first-fee
+        }
+
+    }
+
+    return profit
+}
+
 //122. Best Time to Buy and Sell Stock II
 fun maxProfitII(prices: IntArray): Int {
     var profit = 0
