@@ -1,5 +1,16 @@
 package leetcode
 
+//122. Best Time to Buy and Sell Stock II
+fun maxProfitII(prices: IntArray): Int {
+    var profit = 0
+    for(i in 1 until prices.size){
+        if(prices[i]-prices[i-1] > 0)
+            profit += prices[i]-prices[i-1]
+    }
+    return profit
+
+}
+
 //121. Best Time to Buy and Sell Stock
 fun maxProfitI(prices: IntArray): Int {
     var buy = prices[0]
