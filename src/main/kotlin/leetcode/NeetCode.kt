@@ -4,6 +4,27 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//416. Partition Equal Subset Sum
+fun canPartition(nums: IntArray): Boolean {
+    var sum = 0
+    nums.forEach { sum += it }
+    if(sum%2 != 0) return false
+    sum = sum/2
+
+    var combn = mutableSetOf<Int>()
+    combn.add(0)
+
+    for(i in nums.size-1 downTo 0){
+        var nextComb = mutableSetOf<Int>()
+        for(num in combn){
+            nextComb.add(num+nums[i])
+            nextComb.add(num)
+        }
+        combn = nextComb
+    }
+    return combn.contains(sum)
+}
+
 //45. Jump Game II
 fun jump(nums: IntArray): Int {
     if(nums.size==1) return 0
