@@ -4,6 +4,20 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//518. Coin Change II
+fun change(amount: Int, coins: IntArray): Int {
+    var memo = IntArray(amount+1)
+    memo[0] = 1
+
+    for(coin in coins){
+        for(i in 1..amount){
+            if(coin<=i)
+                memo[i] += memo[i-coin]
+        }
+    }
+    return memo[amount]
+}
+
 //152. Maximum Product Subarray
 fun maxProduct(nums: IntArray): Int {
     if (nums.size == 0) return 0
