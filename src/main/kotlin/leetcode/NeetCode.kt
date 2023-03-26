@@ -4,6 +4,22 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//152. Maximum Product Subarray
+fun maxProduct(nums: IntArray): Int {
+    if (nums.size == 0) return 0
+    var max_so_far = nums[0]
+    var min_so_far = nums[0]
+    var result = max_so_far
+    for (i in 1 until nums.size) {
+        val curr = nums[i]
+        val temp_max = Math.max(curr, Math.max(max_so_far * curr, min_so_far * curr))
+        min_so_far = Math.min(curr, Math.min(max_so_far * curr, min_so_far * curr))
+        max_so_far = temp_max
+        result = Math.max(max_so_far, result)
+    }
+    return result
+}
+
 //139. Word Break
 fun wordBreak(s: String, wordDict: List<String>): Boolean {
     val dp = BooleanArray(s.length + 1) { false }
