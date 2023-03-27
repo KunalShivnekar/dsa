@@ -4,6 +4,36 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//97. Interleaving String
+fun isInterleave(s1: String, s2: String, s3: String): Boolean {
+    if((s1.length + s2.length)!= s3.length) return false
+
+    var memo = Array(s1.length +1){BooleanArray(s2.length+1)}
+    memo[s1.length][s2.length] = true
+
+    for(i in s1.length downTo 0){
+        for(j in s2.length downTo 0){
+            if(i<s1.length && s1[i] == s3[i+j] && memo[i+1][j])
+                memo[i][j] = true
+            if(j<s2.length && s2[j] == s3[i+j] && memo[i][j+1])
+                memo[i][j] = true
+        }
+    }
+    return memo[0][0]
+}
+
+//494. Target Sum
+fun findTargetSumWays(nums: IntArray, target: Int): Int {
+    return checkTarget(nums, target, 0)
+}
+
+fun checkTarget(nums: IntArray, target: Int, index:Int):Int {
+    if(index==nums.size && target == 0) return 1
+    if(index==nums.size) return 0
+
+    return checkTarget(nums, target+nums[index],index+1) + checkTarget(nums, target-nums[index],index+1)
+}
+
 //518. Coin Change II
 fun change(amount: Int, coins: IntArray): Int {
     var memo = IntArray(amount+1)
