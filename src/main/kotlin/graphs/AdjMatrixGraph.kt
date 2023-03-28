@@ -1,10 +1,6 @@
 package graphs
 
-import java.util.ArrayList
-import java.util.LinkedList
-import java.util.PriorityQueue
-import java.util.Queue
-import java.util.Stack
+import java.util.*
 
 data class Vertex(val label:String, var isVisited:Boolean=false)
 
@@ -226,5 +222,27 @@ class AdjMatrixGraph (private val maxVertices:Int){
         }
         for (i in distance.indices)
             println("Vertex ${vertexList[i].label} is at distance ${distance[i]} and nearest to ${vertexList[path[i]].label}")
+    }
+
+    //1584. Min Cost to Connect All Points // Prim's Minimal Spanning Tree
+    fun minCostConnectPoints(points: Array<IntArray>): Int {
+        val minHeap = PriorityQueue<Pair<Int,Int>> { a, b -> a.second - b.second } // sort by distance
+        val visited = HashSet<Int>()
+        var minCost = 0
+        minHeap.add(Pair(0,0))
+        while(visited.size < points.size){
+            val (node,cost) = minHeap.poll()
+            if(visited.contains(node))
+                continue
+            minCost += cost
+            visited.add(node)
+            for(i in 0..points.size-1){
+                val (nextX,nextY) = points[i]
+                val (currentX, CurrentY) = points[node]
+                val distance = Math.abs(currentX - nextX) + Math.abs(CurrentY - nextY)
+                minHeap.add(Pair(i,distance))
+            }
+        }
+        return minCost
     }
 }
