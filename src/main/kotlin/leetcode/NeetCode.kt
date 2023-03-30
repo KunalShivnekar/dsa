@@ -4,6 +4,44 @@ import trees.BinaryTreeNode
 import java.util.*
 import kotlin.math.max
 
+//778. Swim in Rising Water
+fun swimInWater(grid: Array<IntArray>): Int {
+    var n = grid.size
+    var memo = Array(n){IntArray(n){-1}}
+    var heap = PriorityQueue<IntArray>({v1,v2 -> memo[v1[0]][v1[1]] - memo[v2[0]][v2[1]] })
+    memo[0][0] = grid[0][0]
+    heap.add(intArrayOf(0,0))
+    var dirRow = intArrayOf(-1,1,0,0)
+    var dirCol = intArrayOf(0,0,-1,1)
+
+    while(heap.isEmpty().not()){
+        var s = heap.remove()
+        var sx = s[0]
+        var sy = s[1]
+
+        for(i in 0..3){
+            var tx = sx+dirRow[i]
+            var ty = sy+dirCol[i]
+            if(tx<0 || ty<0 || tx>=n || ty >= n)
+                continue
+            var dist = if(grid[tx][ty]>grid[sx][sy])
+                Math.max(grid[tx][ty], memo[sx][sy])
+            else
+                memo[sx][sy]
+
+            if(memo[tx][ty]==-1){
+                memo[tx][ty] = dist
+                heap.add(intArrayOf(tx,ty))
+            }
+            if(memo[tx][ty]>dist){
+                memo[tx][ty] = dist
+            }
+        }
+    }
+    return memo[n-1][n-1]
+}
+
+
 //97. Interleaving String
 fun isInterleave(s1: String, s2: String, s3: String): Boolean {
     if((s1.length + s2.length)!= s3.length) return false

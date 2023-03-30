@@ -201,7 +201,6 @@ class AdjMatrixGraph (private val maxVertices:Int){
         })
         val path = Array<Int>(vertexCount){0}
         distance[source] = 0
-        vertexList[source].isVisited = true
         queue.add(source)
         while (queue.isNotEmpty()){
             val v1 = queue.remove()
