@@ -27,22 +27,16 @@ class Solution {
 
         if(cycle.contains(course))
             return false
-
-        if(prereqList.isEmpty()){
-            order.add(course)
-            visited.add(course)
+        if(visited.contains(course))
             return true
-        }
 
         cycle.add(course)
 
         for(i in 0 until prereqList.size){
-            if(visited.contains(prereqList[i])) continue
             if(dfs(prereqList[i], graph, cycle).not())
                 return false
         }
 
-        graph[course] = mutableListOf<Int>()
         cycle.remove(course)
         order.add(course)
         visited.add(course)

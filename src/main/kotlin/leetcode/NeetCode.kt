@@ -8,7 +8,7 @@ import kotlin.math.max
 fun swimInWater(grid: Array<IntArray>): Int {
     var n = grid.size
     var memo = Array(n){IntArray(n){-1}}
-    var heap = PriorityQueue<IntArray>({v1,v2 -> memo[v1[0]][v1[1]] - memo[v2[0]][v2[1]] })
+    var heap = PriorityQueue<IntArray> { v1, v2 -> memo[v1[0]][v1[1]] - memo[v2[0]][v2[1]] }
     memo[0][0] = grid[0][0]
     heap.add(intArrayOf(0,0))
     var dirRow = intArrayOf(-1,1,0,0)
