@@ -7,6 +7,11 @@ data class BinaryTreeNode(var data:Int, var left: BinaryTreeNode? = null, var ri
 class BinaryTree (val root:BinaryTreeNode) {
 
     companion object {
+        /*
+            *         1
+            *      2     3
+            *    4   5  6  7
+            * */
         fun createTree():BinaryTree {
             val four = BinaryTreeNode(4)
             val five = BinaryTreeNode(5)
