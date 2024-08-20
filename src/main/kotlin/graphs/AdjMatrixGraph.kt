@@ -71,7 +71,7 @@ class AdjMatrixGraph (private val maxVertices:Int){
         addDirectedEdge(end, start)
     }
 
-    fun removeDirectedEdge(start:Int, end:Int){
+    private fun removeDirectedEdge(start:Int, end:Int){
         if(start in 0 until vertexCount && end in 0 until vertexCount)
             adjMatrix[start][end] = 0
     }
@@ -81,7 +81,7 @@ class AdjMatrixGraph (private val maxVertices:Int){
         removeDirectedEdge(end, start)
     }
 
-    fun isEdge(start:Int, end:Int) : Boolean{
+    private fun isEdge(start:Int, end:Int) : Boolean{
         return if(start in 0 until vertexCount && end in 0 until vertexCount)
             adjMatrix[start][end] > 0
         else
@@ -94,22 +94,19 @@ class AdjMatrixGraph (private val maxVertices:Int){
         return vertexCount-1
     }
 
-    fun displayVertex(index:Int):Vertex{
+    private fun displayVertex(index:Int):Vertex{
         println("Vertex visited: ${vertexList[index].label}")
         return vertexList[index]
     }
 
-    fun getAdjacentUnvisitedVertex(source:Int):Int{
+    private fun getAdjacentUnvisitedVertex(source:Int):Int{
         for (j in 0 until vertexCount)
             if (isEdge(source,j).and(vertexList[j].isVisited.not()))
                 return j
         return -1
     }
 
-    fun resetVisitedFlags(){
-        for (j in 0 until vertexCount)
-            vertexList[j].isVisited = false
-    }
+    private fun resetVisitedFlags() = vertexList.forEach { it.isVisited = false }
 
     fun depthFirstSearch(valueToSearch:String):Boolean{
         var isFound = false
