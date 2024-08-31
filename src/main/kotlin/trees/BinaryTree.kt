@@ -148,7 +148,7 @@ class BinaryTree (val root:BinaryTreeNode) {
         return depth
     }
 
-    fun invertTree(rootNode: BinaryTreeNode = root):List<Int> {
+    fun invertTreeBFS(rootNode: BinaryTreeNode = root):List<Int> {
         val queue: Queue<BinaryTreeNode> = LinkedList()
         val res = mutableListOf<Int>()
         queue.add(rootNode)
@@ -170,6 +170,26 @@ class BinaryTree (val root:BinaryTreeNode) {
             }
         }
         return res
+    }
+
+    fun invertTreeDFS(root: BinaryTreeNode?): BinaryTreeNode? {
+        if(root == null) return null
+        var stack = Stack<BinaryTreeNode?>()
+        stack.push(root)
+        while (stack.isEmpty().not()){
+            var tempNode = stack.pop()!!
+            val temp = tempNode.left
+            tempNode.left = tempNode.right
+            tempNode.right = temp
+
+
+            if (tempNode.right != null)
+                stack.push(tempNode.right)
+            if (tempNode.left != null)
+                stack.push(tempNode.left)
+        }
+
+        return root
     }
 
     fun isSameTree(p: BinaryTreeNode?, q: BinaryTreeNode?): Boolean {

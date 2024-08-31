@@ -35,7 +35,7 @@ fun binaryTreeOps(){
     res.stream().forEach {
         println("Nodes: $it")
     }
-    res = tree.invertTree()
+    res = tree.invertTreeBFS()
     res.stream().forEach {
         println("Nodes: $it")
     }
